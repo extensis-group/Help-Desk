@@ -1,0 +1,49 @@
+﻿<section class="row">
+
+    <div class="col-md-5" >
+        <h3>
+            Products
+            <a data-toggle="modal" data-target="#addProductModal"><i class="fa fa-plus-circle pull-right"></i></a>
+        </h3>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="product in products">
+                    <td>{{product.Name}}</td>
+                    <td class="right-align">
+                        <a class="btn btn-success" ng-href="#/products/{{product.Id}}">Manage</a>
+                        <button class="btn btn-danger" ng-click="deleteProduct(product)" >Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+<div id="addProductModal" class="modal fade" role="dialog" style="padding-top:120px;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">New Product</h3>
+            </div>
+            <div class="modal-body">
+                <form name="postProductForm" ng-submit="postProduct()">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Title" name="Name" ng-model="product.Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,22 @@
+﻿
+    <div class="col-sm-8 col-sm-offset-3 search-wrapper center-align" ng-class="{ lonely : isEmptyPage() }">
+    <img src="https://www.extensisexchange.com/IntranetPortal/media/page-images/Extensis_Logo.png" alt="Extensis" />
+        <form class="form-group input-group" ng-submit="searchRefresh(searchTerm)">
+            <input ng-keyup="search(searchTerm)" pattern=".{3,}" required title="3 characters minimum" type="search" class="form-control" placeholder="Search" ng-model="searchTerm" style="border-right:none;" />
+            <span ng-click="searchRefresh(searchTerm)" class="input-group-addon" style="background:transparent;cursor:pointer;"><i class="fa fa-search fa-fw"></i></span>
+        </form>
+</div>
+    <section class="col-sm-10 col-sm-offset-2">
+        <p class="center-align no-results" ng-if="results.activities.length == 0 && !isEmptyPage()">Sorry, we could not find any results for "{{searchTerm}}".</p>
+        <div class="result" ng-repeat="result in results.activities">
+            <h3>{{result.Name}}</h3>
+            <p>{{result.Description}}</p>
+            <p>
+                <span><b>Product</b>: {{result.ProductName}}</span>
+            </p>
+            <p>
+                <span><b>Module</b>: {{result.ModuleName}}</span>
+            </p>
+            <a class="btn btn-extensis" href="#/topics/{{result.Id}}">Go to topic</a>
+        </div>
+    </section>

@@ -1,0 +1,16 @@
+﻿<div class="col-sm-offset-0">
+    <h3>{{activity.Name}}</h3>
+    <p>{{activity.Description}}</p>
+    <h4>Steps</h4>
+    <ol>
+        <li ng-repeat="step in activity.Steps" style="margin-bottom:15px;">
+            <a name="step-{{step.Id}}">{{step.Name}}</a>
+            <p ng-bind-html-unsafe="step.Description">
+                {{step.Description}}
+
+            </p>
+
+            <a href="#/steps/{{step.Id}}/issues" class="btn btn-default btn-sm">Have an issue?</a>
+        </li>
+    </ol>
+</div>

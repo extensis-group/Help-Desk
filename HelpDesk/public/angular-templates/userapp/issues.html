@@ -1,0 +1,58 @@
+﻿<div class="row">
+    <h3>Issues reported for {{step.Name}} in {{activity.Name}}</h3>
+    <hr />
+    <section class="">
+        <p class="col-sm-9" ng-if="step.Issues.length == 0">Sorry, no issues have been reported for this step <hr/> </p>
+        <div class="col-sm-offset-1" ng-repeat="issue in step.Issues">
+            <h4>{{issue.Name}}</h4>
+            <p>{{issue.Description}}</p>
+            <p>{{issue.CreatedAt | date:'M/d/yy h:mm:ss a'}}</p>
+            <a class="btn btn-extensis" href="#/issues/{{issue.Id}}">Go to issue</a>
+        </div>
+    </section>
+
+    <hr/>
+    <p class="col-sm-10">Can't find your issue? Report a new one <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#postIssueModal">here</button>.</p>
+
+    <div id="postIssueModal" class="modal fade" role="dialog" style="padding-top:120px;">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h3 class="modal-title">Report Issue about {{step.Name}} for {{activity.Name}}</h3>
+                </div>
+                <div class="modal-body">
+                    <form ng-submit="postIssue()">
+                        <!--<div class="form-group">
+                            <input class="form-control" placeholder="Title" ng-model="issue.Name" required />
+                        </div>-->
+
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Description" ng-model="issue.Description" required></textarea>
+                        </div>
+                        <button class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div id="issueSuccessModal" class="modal fade" role="dialog" style="padding-top:120px;">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header" style="border-bottom:none;">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body center-align" style="padding-bottom:40px;">
+                    <h3 class="success ">Your issue has been reported</h3>
+                    <p>Please allow us some time to review your issue and respond with a solution.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

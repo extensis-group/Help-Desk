@@ -1,0 +1,56 @@
+﻿<section class="row big-row">
+    <div class="col-sm-6">
+        <h3>Pending Users</h3>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users" ng-if="!user.IsAuthenticated">
+                    <td>{{ user.FirstName }}</td>
+                    <td>{{ user.LastName }}</td>
+                    <td>{{ user.UserName }}</td>
+                    <td>{{ user.Roles[0].Name }}</td>
+                    <td class="right-align">
+                        <button class="btn btn-success" ng-click="authenticateUser(user)">Approve</button>
+                        <button class="btn btn-danger" ng-click="deleteUser(user)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--<div style="height:150px;"></div>-->
+    <div class=" col-sm-6" >
+        <h3>Approved Users</h3>
+        <table class="table table-condensed">
+            <thead>
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="user in users" ng-if="user.IsAuthenticated">
+                    <td>{{ user.FirstName }}</td>
+                    <td>{{ user.LastName }}</td>
+                    <td>{{ user.UserName }}</td>
+                    <td>{{ user.Roles[0].Name }}</td>
+                    <td class="right-align">
+                        <button class="btn btn-warning" ng-click="deauthenticateUser(user)">Deauthenticate</button>
+                        <button class="btn btn-danger" ng-click="deleteUser(user)">Delete</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</section>

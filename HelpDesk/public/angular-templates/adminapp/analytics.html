@@ -1,0 +1,90 @@
+﻿
+
+<div class="row big-row">
+    <a ng-if="entityName != entityEnum.products" ng-click="goBack(entityName)">Back</a>
+    <section>
+
+        <div ng-class="{ 'col-md-6' : showDetail }">
+
+            <h2><span ng-if="selected">{{selected.Name.capitalize()}}'s</span> Views by {{entityName.capitalize()}}</h2>
+            <canvas id="doughnut" class="chart chart-doughnut"
+                    chart=""
+                    chart-data="pie.values"
+                    chart-labels="pie.labels"
+                    chart-click="pieClick" style="cursor:pointer;"
+                    chart-colors="pie.colors"></canvas>
+
+            <h4>Legend</h4>
+            <ul style=" list-style: none; padding:0;">
+
+                <li ng-repeat="label in pie.labels">
+                    <i class="fa fa-circle" aria-hidden="true" style="color: {{ pie.colors[$index] }}"></i> <span>{{label}}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-6" ng-if="showDetail">
+            <h3>{{se}}</h3>
+            <div class="row">
+                <div class="col-xs-6">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="date.start" ng-change="startDateChange(date.start)" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="popup1.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+
+                <div class="col-xs-6">
+                    <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup ng-model="date.end" ng-change="endDateChange(date.end)" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="popup2.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                    </p>
+                </div>
+            </div>
+            <canvas id="detail" class="chart chart-line" 
+                    chart-data="detail.values"
+                    chart-labels="detail.labels"
+                    chart-colors="detail.colors"
+                    chart-series="series"
+                    chart-options="options"
+                    chart-dataset-override="datasetOverride"></canvas>
+        </div>
+        
+    </section>
+    <section class="row">
+        <div class="col-md-offset-3 col-md-6" >
+            <h3>Views by user</h3>
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Role</th>
+                        <th>View Count</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="user in users">
+                        <td>{{user.FirstName}}</td>
+                        <td>{{user.LastName}}</td>
+                        <td>{{user.Roles[0].Name }}</td>
+                        <td>{{user.count}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <canvas id="users" class="chart chart-bar"
+                    chart-data="userGraph.values"
+                    chart-labels="userGraph.labels"
+                    chart-colors="pie.colors"
+                    chart-series="series"
+                    chart-options="options"
+                    chart-dataset-override="datasetOverride"></canvas>
+        </div>
+    </section>
+</div>
+
+ 

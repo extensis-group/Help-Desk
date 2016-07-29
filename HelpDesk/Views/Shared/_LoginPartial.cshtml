@@ -1,0 +1,71 @@
+﻿@using Microsoft.AspNet.Identity
+@using HelpDesk.Tools;
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a class="hidden-xs" href="/userapp#" data-toggle="tooltip" data-placement="bottom" title="Home">
+                <i class="fa fa-home" aria-hidden="true"></i>
+            </a>
+            <a class="hidden-sm hidden-md hidden-lg" href="/userapp#">
+                <i class="fa fa-home" aria-hidden="true"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        @if (UserInfo.isAdmin())
+        {
+            <li>
+                <a class="hidden-xs" href="/adminapp#/" data-toggle="tooltip" data-placement="bottom" title="Admin">
+                    @*<i class="fa fa-bell" aria-hidden="true"></i>*@
+                    @*<i class="fa fa-tachometer" aria-hidden="true"></i>*@
+
+                    <i class="fa fa-desktop" aria-hidden="true"></i>
+                </a>
+                <a class="hidden-sm hidden-md hidden-lg" href="/adminapp#/">
+                    @*<i class="fa fa-bell" aria-hidden="true"></i>*@
+                    @*<i class="fa fa-tachometer" aria-hidden="true"></i>*@
+
+                    <i class="fa fa-desktop" aria-hidden="true"></i>
+                    <span>Admin</span>
+                </a>
+                <a class="hidden-sm hidden-md hidden-lg" href="/adminapp#/users" ng-class="{ notifyRed : areUsersPending }"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                <a class="hidden-sm hidden-md hidden-lg" href="/adminapp#/issues" ng-class="{ notifyRed : areIssuesPending }"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Issues</a>
+                <a class="hidden-sm hidden-md hidden-lg" href="/adminapp#/analytics"><i class="fa fa-line-chart" aria-hidden="true"></i> Analytics</a>
+                    @*<span>4</span>*@
+            </li>
+
+        }
+        <li>
+            <a class="hidden-xs" href="/account/manage" data-toggle="tooltip" data-placement="bottom" title="Manage account">
+
+                <i class="fa fa-user" aria-hidden="true"></i>
+            </a>
+            <a class="hidden-sm hidden-md hidden-lg" href="/account/manage">
+
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span>Manage account</span>
+            </a>
+        </li>
+        <li>
+            <a class="hidden-xs" href="javascript:document.getElementById('logoutForm').submit()" data-toggle="tooltip" data-placement="bottom" title="Logout">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+            </a>
+            <a class="hidden-sm hidden-md hidden-lg" href="javascript:document.getElementById('logoutForm').submit()">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+    </ul>
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+    </ul>
+}

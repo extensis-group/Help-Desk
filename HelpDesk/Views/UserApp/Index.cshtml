@@ -1,0 +1,48 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="main" ng-app="userApp">
+    <aside class="sidebar hidden-xs" ng-controller="sidebarController">
+        <form class="form-group input-group" ng-submit="searchActivities(searchTerm)">
+            <input pattern=".{3,}" required title="3 characters minimum" type="search" class="form-control" placeholder="Search" ng-model="searchTerm" style="border-right:none;" />
+            <span ng-click="searchActivities(searchTerm)" class="input-group-addon" style="background:transparent;cursor:pointer;"><i class="fa fa-search fa-fw"></i></span>
+        </form>
+        <nav>
+            <ul>
+                <li ng-repeat="product in products">
+                    <a ng-data-id="{{product.Id}}" ng-click="getProductDetails(product.Id)">{{product.Name}}</a>
+                    <ul>
+                        <li ng-if="product.Modules && product.Modules.length == 0">No modules available for this product</li>
+                        <li ng-repeat="module in product.Modules">
+                            <a ng-data-id="{{module.Id}}" ng-click="getModuleDetails(module.Id, product.Id)">{{module.Name}}</a>
+                            <ul>
+                                <li ng-if="module.Activities && module.Activities.length == 0">No topics available for this module</li>
+                                <li ng-repeat="activity in module.Activities">
+                                    <a href="#/topics/{{activity.Id}}" ng-data-id="{{activity.Id}}" ng-click="getActivityDetails(activity.Id, module.Id, product.Id)">{{activity.Name}}</a>
+                                    @*<ul>
+                                            <li ng-repeat="step in activity.Steps">
+                                                <a href="#/activities/{{activity.Id}}#step-{{step.Id}}">{{step.Name}}</a>
+                                             </li>
+                                        </ul>*@
+                                </li>
+                                
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+       
+    </aside>
+    <main class="view container-fluid"  >
+        <div class="col-sm-7 col-sm-offset-3" ng-view>
+
+        </div>
+    </main>
+</div>
+<script>
+    $('.sidebar').height(window.innerHeight - 50);
+
+</script>

@@ -1,0 +1,12 @@
+﻿
+<form ng-submit="postIssue()">
+    <h3>Report Issue about {{step.Name}} for {{activity.Name}}</h3>
+    <div class="form-group">
+        <input class="form-control" placeholder="Title" ng-model="issue.Name"/>
+    </div>
+
+    <div class="form-group">
+        <textarea class="form-control" placeholder="Description" ng-model="issue.Description"></textarea>
+    </div>
+    <button class="btn btn-primary">Submit</button>
+</form>

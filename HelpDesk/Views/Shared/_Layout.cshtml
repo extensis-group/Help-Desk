@@ -1,0 +1,66 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TSG Help Center</title>
+    @*<title>@ViewBag.Title - My ASP.NET Application</title>*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Scripts/jquery-1.10.2.js")
+    @Scripts.Render("~/Scripts/jquery-ui-1.11.4.js")
+    @Scripts.Render("~/Scripts/angular.js")
+    @Scripts.Render("~/Scripts/angular-route.js")
+    @Scripts.Render("~/Scripts/angular-ui.js")
+    @Scripts.Render("~/Scripts/ng-tags-input.min.js")
+    @Scripts.Render("~/Scripts/app/userAppController.js")
+    @Scripts.Render("~/Scripts/app/adminAppController.js")
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.6/Chart.min.js"></script>
+        @Scripts.Render("~/Scripts/angular-chart.min.js")
+    @*<script src="~/scripts/ui-bootstrap-custom-build/ui-bootstrap-custom-2.0.0.js"></script>
+    <script src="~/scripts/ui-bootstrap-custom-build/ui-bootstrap-custom-tpls-2.0.0.js"></script>*@
+    <link href="~/scripts/ui-bootstrap-custom-build/ui-bootstrap-custom-2.0.0-csp.css" rel="stylesheet" />
+    <script src="~/scripts/angular-ui/ui-bootstrap.js"></script>
+    <script src="~/scripts/angular-ui/ui-bootstrap-tpls.js"></script>
+    </head>
+    <body>
+        <div class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/userapp">
+                        <img class="logo" src="http://www.extensisgroup.com/Extensis_Group/media/GlobalImages/Extensis_Logo.png"></a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @*<li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>*@
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid body-content">
+        @RenderBody()
+        @*<hr />*@
+        @*<footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>*@
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
+</body>
+
+</html>

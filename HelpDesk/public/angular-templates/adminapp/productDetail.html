@@ -1,0 +1,308 @@
+﻿
+
+<section class="">
+
+    <h1 class="">Dashboard</h1>
+    <div class="row">
+        <div class="col-xs-12">
+            <h3>
+                Products
+                <a data-toggle="modal" data-target="#addProductModal"><i class="fa fa-plus-circle pull-right"></i></a>
+            </h3>
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="product in products" ng-class="{ greyBg :  $parent.product.Id == product.Id }">
+                        <td>
+                            <span data-ng-show="!product.editMe">{{product.Name}}</span>
+                            <input data-ng-show="product.editMe" class="form-control" data-ng-model="product.Name" />
+                        </td>
+                        <td class="right-align">
+                            <button class="btn btn-success" data-ng-show="!product.editMe" ng-click="getProduct(product)">Modules</button>
+                            <button class="btn btn-primary" data-ng-show="!product.editMe" data-ng-click="product.editMe = true">Edit</button>
+                            <button class="btn btn-danger" data-ng-show="!product.editMe" data-ng-click="deleteProduct(product)" data-ng-disabled="product.HasProducts">Delete</button>
+                            <button class="btn btn-primary" data-ng-show="product.editMe" data-ng-click="putProduct(product); product.editMe=false;">Save</button>
+                            <button class="btn btn-default" data-ng-show="product.editMe" data-ng-click="product.editMe = false">Cancel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row" style="text-align:center;">
+        <i class="fa fa-long-arrow-down" aria-hidden="true" style="font-size:50px;" ng-if="product"></i>
+    </div>
+    <div class="row" ng-if="product">
+        <div class="col-xs-12">
+            <h3>
+                Modules for {{product.Name}}
+                <a data-toggle="modal" data-target="#addModuleModal"><i class="fa fa-plus-circle pull-right"></i></a>
+            </h3>
+            <table class="table  table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="module in product.Modules" ng-class="{ greyBg :  $parent.module.Id == module.Id }">
+                        <td>
+                            <span data-ng-show="!module.editMe">{{module.Name}}</span>
+                            <input data-ng-show="module.editMe" class="form-control" data-ng-model="module.Name" />
+                        </td>
+
+                        <td class="right-align">
+                            <button class="btn btn-success" data-ng-show="!module.editMe" ng-click="getModule(module)">Topics</button>
+                            <button class="btn btn-primary" data-ng-show="!module.editMe" data-ng-click="module.editMe = true">Edit</button>
+                            <button class="btn btn-danger" data-ng-show="!module.editMe" data-ng-click="deleteModule(module)" data-ng-disabled="module.HasModules">Delete</button>
+                            <button class="btn btn-primary" data-ng-show="module.editMe" data-ng-click="putModule(module); module.editMe=false;">Save</button>
+                            <button class="btn btn-default" data-ng-show="module.editMe" data-ng-click="module.editMe = false">Cancel</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div style="text-align:center;" ng-if="module">
+                <i class="fa fa-long-arrow-down" aria-hidden="true" style="font-size:50px;"></i>
+            </div>
+        </div>
+    </div>
+    <div class="row" ng-if="module">
+        <div class="col-xs-12">
+            <h3>
+                Topics for {{module.Name}}
+                <a data-toggle="modal" data-target="#addActivityModal"><i class="fa fa-plus-circle pull-right"></i></a>
+                <!--<a href="#/activities/add"><i class="fa fa-plus-circle pull-right"></i></a>-->
+            </h3>
+            <table class="table table-hover table-condensed table-responsive">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Tags</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="activity in module.Activities" ng-class="{ greyBg :  $parent.activity.Id == activity.Id }">
+                        <td>
+                            <span data-ng-show="!activity.editMe">{{activity.Name}}</span>
+                            <input data-ng-show="activity.editMe" class="form-control" data-ng-model="activity.Name" />
+                        </td>
+                        <td>
+                            <span data-ng-show="!activity.editMe">{{activity.Description}}</span>
+                            <input data-ng-show="activity.editMe" class="form-control" data-ng-model="activity.Description">
+
+                        </td>
+                        <td>
+                            <div data-ng-show="!activity.editMe">
+                                <span ng-repeat="tag in activity.Tags" class="label label-primary">{{tag.Name}}</span>
+                            </div>
+                            <button class="btn btn-info" data-ng-show="activity.editMe" data-toggle="modal" data-target="#editActivityTagsModal">Edit tags</button>
+                            <div id="editActivityTagsModal" class="modal fade" role="dialog" style="padding-top:120px;">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h3 class="modal-title">Edit {{product.Name}}'s tags</h3>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <em>Use commas to separate entries</em>
+                                                <tags-input data-ng-model="activity.Tags" data-display-property="Name" data-tag-class="label" data-on-tag-removed="detachTagFromActivity(activity, $tag)" data-on-tag-added="addTag(activity, $tag)"></tags-input>
+                                            </div>
+                                            <div class="form-group">
+                                                <button class="btn btn-primary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!--<tags-input data-ng-show="activity.editMe" data-ng-model="activity.Tags" data-display-property="Name" data-tag-class="label"></tags-input>-->
+                        </td>
+                        <td class="right-align">
+                            <button class="btn btn-success" data-ng-show="!activity.editMe" data-ng-click="getActivity(activity)">Steps</button>
+                            <button class="btn btn-primary" data-ng-show="!activity.editMe" data-ng-click="activity.editMe = true">Edit</button>
+                            <button class="btn btn-danger" data-ng-show="!activity.editMe" data-ng-click="deleteActivity(activity)">Delete</button>
+                            <button class="btn btn-primary" data-ng-show="activity.editMe" data-ng-click="putActivity(activity); activity.editMe=false;">Save</button>
+                            <button class="btn btn-default" data-ng-show="activity.editMe" data-ng-click="activity.editMe = false">Cancel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row center-align" ng-if="activity">
+        <i class="fa fa-long-arrow-down " aria-hidden="true" style="font-size:50px;"></i>
+    </div>
+    <div class="row" ng-if="activity">
+        <div class="col-xs-12">
+            <h3>
+                Steps for {{activity.Name}}
+                <a data-toggle="modal" data-target="#addStepModal"><i class="fa fa-plus-circle pull-right"></i></a>
+            </h3>
+            <table class="table table-hover table-condensed">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody ui-sortable="sortOptions" ng-model="activity.Steps">
+                    <tr ng-repeat="step in activity.Steps" style="cursor: move; cursor: grab; cursor: -moz-grab; cursor: -webkit-grab; ">
+                        <td>{{step.Order}}</td>
+                        <td>
+                            <span data-ng-show="!step.editMe">{{step.Name}}</span>
+                            <input data-ng-show="step.editMe" class="form-control" data-ng-model="step.Name" />
+                        </td>
+                        <td>
+                            <span data-ng-show="!step.editMe">{{step.Description}}</span>
+                            <textarea data-ng-show="step.editMe" class="form-control" data-ng-model="step.Description" maxlength="1000" required></textarea>
+
+                        </td>
+                        <td class="right-align">
+                            <button class="btn btn-primary" data-ng-show="!step.editMe" data-ng-click="step.editMe = true">Edit</button>
+                            <button class="btn btn-danger" data-ng-show="!step.editMe" data-ng-click="deleteStep(step)">Delete</button>
+                            <button class="btn btn-primary" data-ng-show="step.editMe" data-ng-click="putStep(step); step.editMe=false;">Save</button>
+                            <button class="btn btn-default" data-ng-show="step.editMe" data-ng-click="step.editMe = false">Cancel</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+<div id="addProductModal" class="modal fade" role="dialog" style="padding-top:120px;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Add new product</h3>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="postProduct()">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Title" name="Name" ng-model="postProductObj.Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="addModuleModal" class="modal fade" role="dialog" style="padding-top:120px;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Add new module to {{product.Name}}</h3>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="postModule()">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Title" name="Name" ng-model="postModuleObj.Name" required />
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div id="addActivityModal" class="modal fade" role="dialog" style="padding-top:120px;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Add new topic to {{module.Name}}</h3>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="postActivity()">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Title" name="Name" ng-model="postActivityObj.Name" required />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Description" name="Description" ng-model="postActivityObj.Description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="addStepModal" class="modal fade" role="dialog" style="padding-top:120px;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h3 class="modal-title">Add new step to {{activity.Name}}</h3>
+            </div>
+            <div class="modal-body">
+                <form ng-submit="postStep()">
+                    <div class="form-group">
+                        <input class="form-control" type="text" placeholder="Title" name="Name" ng-model="postStepObj.Name" required />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" placeholder="Description" name="Description" ng-model="postStepObj.Description" maxlength="10000" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-primary" type="submit" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div id="errorModal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false" style="padding-top:120px;">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" ng-click="errorMessage.show=false">&times;</button>
+                <h3 class="modal-title error ">Error</h3>
+            </div>
+            <div class="modal-body">
+                <p>{{errorMessage.description}}</p>
+                <button class="btn btn-default" ng-click="errorMessage.show=false">Ok</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style>
+    td .btn{
+        margin-top:5px;
+    }
+</style>

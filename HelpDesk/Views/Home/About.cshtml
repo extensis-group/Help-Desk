@@ -1,0 +1,30 @@
+﻿@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+<script>
+    function postMe(controller, parent, parentId, number) {
+        var data = {
+            "name": controller + " " + number ,
+            "description": "description",
+            "order": number
+        }
+        data[parent + "Id"] = parentId;
+        console.log(data);
+        $.ajax({
+            type: "post",
+            url: "/api/"+controller,
+            contentType: "application/json",
+            data: JSON.stringify(data),
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        });
+    }
+</script>

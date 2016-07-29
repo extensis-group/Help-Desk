@@ -1,0 +1,8 @@
+﻿
+    <h2 class="error">Issue</h2>
+    <p>{{issue.Description}}</p>
+    <hr />
+    <h3 class="success">Solution</h3>
+    <p  ng-show="!issue.Solutions || issue.Solutions.length == 0">Sorry, no solution has been reported yet.</p>
+    <h4>{{issue.Solutions[0].Name}}</h4>
+    <p>{{issue.Solutions[0].Description}}</pclass>

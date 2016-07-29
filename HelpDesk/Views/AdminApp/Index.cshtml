@@ -1,0 +1,51 @@
+﻿
+<div class="main" ng-app="adminApp">
+    <aside class="sidebar">
+        <nav ng-controller="navController">
+            <ul class="no-list-style">
+                <li>
+                    <a href="#/"><i class="fa fa-desktop" aria-hidden="true"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="#/users" ng-class="{ notifyRed : areUsersPending }"><i class="fa fa-users" aria-hidden="true"></i> Users</a>
+                </li>
+                <li>
+                    <a href="#/roles"><i class="fa fa-cog" aria-hidden="true"></i> Roles</a>
+                </li>
+                @*<li>
+                    <a href="#/issues"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Modules</a>
+                </li>
+                <li>
+                    <a href="#/activities"><i class="fa fa-play-circle-o" aria-hidden="true"></i> Activities</a>
+                </li>*@
+                <li>
+                    <a href="#/issues" ng-class="{ notifyRed : areIssuesPending }"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Issues</a>
+                </li>
+                <li>
+                    <a href="#/analytics"><i class="fa fa-line-chart" aria-hidden="true"></i> Analytics</a>
+                </li>
+
+
+                @*<li>
+                    <a href="#/users"><i class="fa fa-user-plus" aria-hidden="true" style="color:red;"></i> Pending Users</a>
+                </li>*@
+            </ul>
+        </nav>
+    </aside>
+    <main class="view admin-view container container-fluid" ng-view>
+    </main>
+</div>
+<style>
+    .no-list-style{
+        list-style:none;
+    }
+    .sidebar li{
+        padding:7px 0;
+    }
+    .notifyRed {
+        color: #cc0000;
+    }
+</style>
+<script>
+    $('.sidebar').height(window.innerHeight - 50);
+</script>
