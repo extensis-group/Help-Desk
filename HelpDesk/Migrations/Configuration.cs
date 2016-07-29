@@ -83,16 +83,21 @@ namespace HelpDesk.Migrations
 
             }
 
-            var newUser = new ApplicationUser();
-            newUser.UserName = "admin@extensisgroup.com";
-            newUser.FirstName = "Admin";
-            newUser.LastName = "User";
-
-            var createUserResult =  userManager.Create(newUser, "secret");
-            if (createUserResult.Succeeded){
+            string firstAdminEmail = "admin@extensisgroup.com";
             
-                userManager.AddToRole(newUser.Id, RoleNames.ROLE_ADMIN);
-            }
+            var passwordHash = new PasswordHasher();
+            string password = passwordHash.HashPassword("secret");
+            context.Users.AddOrUpdate(u => u.UserName,
+                new ApplicationUser
+                {
+                    UserName = firstAdminEmail,
+                    FirstName = "Admin",
+                    LastName = "User",
+                    PasswordHash = password,
+                    IsAuthenticated = true
+
+                }
+            );
             
         }
     }
